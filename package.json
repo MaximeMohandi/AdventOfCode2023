@@ -1,0 +1,32 @@
+{
+  "name": "adventOfCode2023",
+  "version": "1.0.0",
+  "description": "my advent of code day by day",
+  "main": "index.ts",
+  "author": "Maxime Mohandi <mohandi.maxime@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "yarn jest",
+    "watch": "yarn jest --watch",
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "jest": "^29.7.0",
+    "ts-node": "^10.9.1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true,
+    "transform": {
+      "^.+\\.ts?$": "babel-jest"
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.5",
+    "@babel/preset-env": "^7.23.5",
+    "@babel/preset-typescript": "^7.23.3",
+    "@types/jest": "^29.5.10",
+    "babel-jest": "^29.7.0",
+    "typescript": "^5.3.2"
+  }
+}
