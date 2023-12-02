@@ -1,4 +1,4 @@
-import { findFewestCubeForGame } from ".";
+import { computeCubesPower, findFewestCubeForGame } from ".";
 
 test("should find the fewest number of cubes possible in a game", () => {
   const game = {
@@ -13,4 +13,10 @@ test("should find the fewest number of cubes possible in a game", () => {
   const expected = { red: 3, blue: 3, green: 3 };
 
   expect(findFewestCubeForGame(game)).toEqual(expected);
+});
+
+test("should compute the power of a set of cubes", () => {
+  const cubes = { red: 3, blue: 3, green: 3 };
+
+  expect(computeCubesPower(cubes)).toEqual(27);
 });

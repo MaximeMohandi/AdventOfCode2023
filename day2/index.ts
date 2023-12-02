@@ -72,6 +72,10 @@ export const findFewestCubeForGame = (game: GameResults) => {
   };
 };
 
+export const computeCubesPower = (cubes: Hand) => {
+  return Object.values(cubes).reduce((acc, curr) => acc * curr, 1);
+};
+
 export default function validate() {
   const validationFile = readFileSync(
     path.join(__dirname, "./validation.txt"),
