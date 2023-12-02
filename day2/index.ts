@@ -64,6 +64,14 @@ export const sumPossibleGameIds = (bagPredicate: Hand, games: string[]) => {
   return nbGamePossible;
 };
 
+export const findFewestCubeForGame = (game: GameResults) => {
+  return {
+    red: Math.max(...game.handsPlayed.map((hand) => hand.red)),
+    blue: Math.max(...game.handsPlayed.map((hand) => hand.blue)),
+    green: Math.max(...game.handsPlayed.map((hand) => hand.green)),
+  };
+};
+
 export default function validate() {
   const validationFile = readFileSync(
     path.join(__dirname, "./validation.txt"),
