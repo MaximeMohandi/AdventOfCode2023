@@ -1,21 +1,21 @@
-export type Hands = {
+export type Hand = {
   red?: number;
   blue?: number;
   green?: number;
 };
 export type GameResults = {
   gameId: number;
-  handsPlayed: Hands[];
+  handsPlayed: Hand[];
 };
 
 export function readGameResult(gameResult: string[]): Array<GameResults> {
   return gameResult.map((game) => {
     const gameId = game.split(":")[0].match(/\d/g).join("");
-    const results = game
+    const handsPlayed = game
       .split(":")[1]
       .split(";")
       .map((result) => {
-        let hands: Hands = {};
+        let hands: Hand = {};
         result.split(",").forEach((cubes) => {
           let trimmedNumber = cubes.trim();
           let nbCube = trimmedNumber.split(" ")[0];
@@ -30,14 +30,24 @@ export function readGameResult(gameResult: string[]): Array<GameResults> {
       });
     return {
       gameId: parseInt(gameId),
-      results,
+      handsPlayed,
     };
   });
 }
 
-export default function validate(
-  predicateRedCube: number,
-  predicateGreenCube: number,
-  predicateBlueCube: number,
-  gameResult: string
-) {}
+export function isGamePossible(
+  bagPredicate: Hand,
+  gameResult: GameResults
+): boolean {
+  let isPossible = true;
+  gameResult.handsPlayed.forEach((hand) => {
+    Object.keys(hand).forEach((color) => {
+      if (hand[color] > bagPredicate[color]) {
+        isPossible = false;
+      }
+    });
+  });
+  return isPossible;
+}
+
+export default function validate(bagPredicate: Hand, gameResult: string) {}
