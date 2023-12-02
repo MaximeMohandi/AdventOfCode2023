@@ -99,5 +99,8 @@ export default function validate() {
     "utf-8"
   );
   let games: string[] = validationFile.split("\r\n");
-  return sumPossibleGameIds({ red: 12, green: 13, blue: 14 }, games);
+  return `part 1: ${sumPossibleGameIds(
+    { red: 12, green: 13, blue: 14 },
+    games
+  )} part 2: ${sumMinimumSetOfCubesPower(games)}`;
 }
