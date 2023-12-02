@@ -50,4 +50,15 @@ export function isGamePossible(
   return isPossible;
 }
 
+export const sumPossibleGameIds = (bagPredicate: Hand, games: string[]) => {
+  const gamesResults = readGameResult(games);
+  let nbGamePossible = 0;
+  gamesResults.forEach((game) => {
+    if (isGamePossible(bagPredicate, game)) {
+      nbGamePossible += game.gameId;
+    }
+  });
+  return nbGamePossible;
+};
+
 export default function validate(bagPredicate: Hand, gameResult: string) {}
