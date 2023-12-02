@@ -84,6 +84,15 @@ export const computeMinimumSetOfCubesPower = (games: GameResults) => {
   return computeCubesPower(minimmumSet);
 };
 
+export const sumMinimumSetOfCubesPower = (games: string[]) => {
+  const gamesResults = readGameResult(games);
+  let sum = 0;
+  gamesResults.forEach((game) => {
+    sum += computeMinimumSetOfCubesPower(game);
+  });
+  return sum;
+};
+
 export default function validate() {
   const validationFile = readFileSync(
     path.join(__dirname, "./validation.txt"),
