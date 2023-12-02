@@ -1,24 +1,24 @@
 import { readFileSync } from "fs";
 const path = require("path");
 
-export type Hand = {
+export type SetOfCube = {
   red?: number;
   blue?: number;
   green?: number;
 };
 export type GameResults = {
   gameId: number;
-  handsPlayed: Hand[];
+  setOfCubes: SetOfCube[];
 };
 
 export function readGameResult(gameResult: string[]): Array<GameResults> {
   return gameResult.map((game) => {
     const gameId = game.split(":")[0].match(/\d/g).join("");
-    const handsPlayed = game
+    const setOfCubes = game
       .split(":")[1]
       .split(";")
       .map((result) => {
-        let hands: Hand = {};
+        let hands: SetOfCube = {};
         result.split(",").forEach((cubes) => {
           let trimmedNumber = cubes.trim();
           let nbCube = trimmedNumber.split(" ")[0];
@@ -33,17 +33,17 @@ export function readGameResult(gameResult: string[]): Array<GameResults> {
       });
     return {
       gameId: parseInt(gameId),
-      handsPlayed,
+      setOfCubes,
     };
   });
 }
 
 export function isGamePossible(
-  bagPredicate: Hand,
+  bagPredicate: SetOfCube,
   gameResult: GameResults
 ): boolean {
   let isPossible = true;
-  gameResult.handsPlayed.forEach((hand) => {
+  gameResult.setOfCubes.forEach((hand) => {
     Object.keys(hand).forEach((color) => {
       if (hand[color] > bagPredicate[color]) {
         isPossible = false;
@@ -53,7 +53,10 @@ export function isGamePossible(
   return isPossible;
 }
 
-export const sumPossibleGameIds = (bagPredicate: Hand, games: string[]) => {
+export const sumPossibleGameIds = (
+  bagPredicate: SetOfCube,
+  games: string[]
+) => {
   const gamesResults = readGameResult(games);
   let nbGamePossible = 0;
   gamesResults.forEach((game) => {
@@ -66,13 +69,13 @@ export const sumPossibleGameIds = (bagPredicate: Hand, games: string[]) => {
 
 export const findFewestCubeForGame = (game: GameResults) => {
   return {
-    red: Math.max(...game.handsPlayed.map((hand) => hand.red ?? 0)),
-    blue: Math.max(...game.handsPlayed.map((hand) => hand.blue ?? 0)),
-    green: Math.max(...game.handsPlayed.map((hand) => hand.green ?? 0)),
+    red: Math.max(...game.setOfCubes.map((hand) => hand.red ?? 0)),
+    blue: Math.max(...game.setOfCubes.map((hand) => hand.blue ?? 0)),
+    green: Math.max(...game.setOfCubes.map((hand) => hand.green ?? 0)),
   };
 };
 
-export const computeCubesPower = (cubes: Hand) => {
+export const computeCubesPower = (cubes: SetOfCube) => {
   return Object.values(cubes).reduce(
     (acc, curr) => (acc == 0 ? 1 : acc) * (curr == 0 ? 1 : curr),
     1
