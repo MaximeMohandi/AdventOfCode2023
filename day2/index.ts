@@ -66,14 +66,22 @@ export const sumPossibleGameIds = (bagPredicate: Hand, games: string[]) => {
 
 export const findFewestCubeForGame = (game: GameResults) => {
   return {
-    red: Math.max(...game.handsPlayed.map((hand) => hand.red)),
-    blue: Math.max(...game.handsPlayed.map((hand) => hand.blue)),
-    green: Math.max(...game.handsPlayed.map((hand) => hand.green)),
+    red: Math.max(...game.handsPlayed.map((hand) => hand.red ?? 0)),
+    blue: Math.max(...game.handsPlayed.map((hand) => hand.blue ?? 0)),
+    green: Math.max(...game.handsPlayed.map((hand) => hand.green ?? 0)),
   };
 };
 
 export const computeCubesPower = (cubes: Hand) => {
-  return Object.values(cubes).reduce((acc, curr) => acc * curr, 1);
+  return Object.values(cubes).reduce(
+    (acc, curr) => (acc == 0 ? 1 : acc) * (curr == 0 ? 1 : curr),
+    1
+  );
+};
+
+export const computeMinimumSetOfCubesPower = (games: GameResults) => {
+  const minimmumSet = findFewestCubeForGame(games);
+  return computeCubesPower(minimmumSet);
 };
 
 export default function validate() {
