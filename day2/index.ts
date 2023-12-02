@@ -1,3 +1,6 @@
+import { readFileSync } from "fs";
+const path = require("path");
+
 export type Hand = {
   red?: number;
   blue?: number;
@@ -61,4 +64,11 @@ export const sumPossibleGameIds = (bagPredicate: Hand, games: string[]) => {
   return nbGamePossible;
 };
 
-export default function validate(bagPredicate: Hand, gameResult: string) {}
+export default function validate() {
+  const validationFile = readFileSync(
+    path.join(__dirname, "./validation.txt"),
+    "utf-8"
+  );
+  let games: string[] = validationFile.split("\r\n");
+  return sumPossibleGameIds({ red: 12, green: 13, blue: 14 }, games);
+}

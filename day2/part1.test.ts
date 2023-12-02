@@ -54,7 +54,7 @@ test("should read game result", () => {
   expect(result).toEqual(expected);
 });
 
-test("when game has more cube than predicate then game is not possible", () => {
+test("when game has more cube than predicate than game is not possible", () => {
   const bagPredicate = { red: 12, green: 13, blue: 14 };
   const gameResults = {
     gameId: 3,
